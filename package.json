@@ -22,17 +22,17 @@
     "POS",
     "Bluetooth",
     "Printer",
-    "Tulpar Yazılım"
+    "deibi12"
   ],
   "license": "MIT",
   "main": "index",
   "types": "./types/index.d.ts",
   "typings": "./types/index.d.ts",
   "name": "ds-react-native-bluetooth-printer",
-  "homepage": "https://github.com/tulparyazilim/tp-react-native-bluetooth-printer#readme",
+  "homepage": "https://github.com/Deibi12/ds-react-native-bluetooth-printer#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tulparyazilim/tp-react-native-bluetooth-printer"
+    "url": "https://github.com/Deibi12/ds-react-native-bluetooth-printer"
   },
   "peerDependencies": {
     "react-native": ">=0.55.4"
@@ -43,5 +43,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.5.0"
+  "version": "1.5.1"
 }
