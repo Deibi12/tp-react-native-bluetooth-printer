@@ -133,7 +133,7 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
             for (BluetoothDevice d : boundDevices) {
                 try {
                     JSONObject obj = new JSONObject();
-                    obj.put("name", d.getName()); 
+                    obj.put("name", d.getName());
                     obj.put("address", d.getAddress());
                     pairedDeivce.pushString(obj.toString());
                 } catch (Exception e) {
@@ -171,7 +171,7 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
         }else {
             cancelDisCovery();
             int permissionChecked = ContextCompat.checkSelfPermission(reactContext, android.Manifest.permission.ACCESS_FINE_LOCATION);
-            if (permissionChecked == PackageManager.PERMISSION_DENIED) { 
+            if (permissionChecked == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(reactContext.getCurrentActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
 
@@ -183,9 +183,9 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
                     android.Manifest.permission.BLUETOOTH_CONNECT,
                     android.Manifest.permission.BLUETOOTH_SCAN,
                     }, 1);
-                } 
+                }
             }
-            
+
             pairedDeivce = new JSONArray();
             foundDevice = new JSONArray();
             Set<BluetoothDevice> boundDevices = adapter.getBondedDevices();
@@ -227,7 +227,7 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
         catch (Exception e) {
             Log.e(TAG, e.getMessage());
             promise.reject(e.getMessage());
-        }  
+        }
     }
 
     @ReactMethod
@@ -235,21 +235,21 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
         try {
              BluetoothDevice device = mService.getConnectedDevice();
              if (device != null) {
-                WritableArray connectedDeviceArray = Arguments.createArray(); 
+                WritableArray connectedDeviceArray = Arguments.createArray();
                 JSONObject obj = new JSONObject();
                 obj.put("name", device.getName());
                 obj.put("address", device.getAddress());
-                connectedDeviceArray.pushString(obj.toString()); 
+                connectedDeviceArray.pushString(obj.toString());
                 promise.resolve(connectedDeviceArray);
              }
              else {
                 promise.resolve(null);
-             } 
+             }
         }
         catch (Exception e) {
             Log.e(TAG, e.getMessage());
             promise.reject(e.getMessage());
-        }  
+        }
     }
 
     @ReactMethod
@@ -290,58 +290,58 @@ public class RNBluetoothManagerModule extends ReactContextBaseJavaModule
 
     @Override
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-        BluetoothAdapter adapter = this.getBluetoothAdapter();
-        Log.d(TAG, "onActivityResult " + resultCode);
-        switch (requestCode) {
-            case REQUEST_CONNECT_DEVICE: {
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK) {
-                    // Get the device MAC address
-                    String address = data.getExtras().getString(
-                            EXTRA_DEVICE_ADDRESS);
-                    // Get the BLuetoothDevice object
-                    if (adapter!=null && BluetoothAdapter.checkBluetoothAddress(address)) {
-                        BluetoothDevice device = adapter
-                                .getRemoteDevice(address);
-                        // Attempt to connect to the device
-                        mService.connect(device);
-                    }
-                }
-                break;
-            }
-            case REQUEST_ENABLE_BT: {
-                Promise promise = promiseMap.remove(PROMISE_ENABLE_BT);
-                // When the request to enable Bluetooth returns
-                if (resultCode == Activity.RESULT_OK && promise != null) {
-                    // Bluetooth is now enabled, so set up a session
-                    if(adapter!=null){
-                        WritableArray pairedDeivce =Arguments.createArray();
-                        Set<BluetoothDevice> boundDevices = adapter.getBondedDevices();
-                        for (BluetoothDevice d : boundDevices) {
-                            try {
-                                JSONObject obj = new JSONObject();
-                                obj.put("name", d.getName());
-                                obj.put("address", d.getAddress());
-                                pairedDeivce.pushString(obj.toString());
-                            } catch (Exception e) {
-                                //ignore.
-                            }
-                        }
-                        promise.resolve(pairedDeivce);
-                    }else{
-                        promise.resolve(null);
-                    }
-
-                } else {
-                    // User did not enable Bluetooth or an error occured
-                    Log.d(TAG, "BT not enabled");
-                    if (promise != null) {
-                        promise.reject("ERR", new Exception("BT NOT ENABLED"));
-                    }
-                }
-                break;
-            }
-        }
+//         BluetoothAdapter adapter = this.getBluetoothAdapter();
+//         Log.d(TAG, "onActivityResult " + resultCode);
+//         switch (requestCode) {
+//             case REQUEST_CONNECT_DEVICE: {
+//                 // When DeviceListActivity returns with a device to connect
+//                 if (resultCode == Activity.RESULT_OK) {
+//                     // Get the device MAC address
+//                     String address = data.getExtras().getString(
+//                             EXTRA_DEVICE_ADDRESS);
+//                     // Get the BLuetoothDevice object
+//                     if (adapter!=null && BluetoothAdapter.checkBluetoothAddress(address)) {
+//                         BluetoothDevice device = adapter
+//                                 .getRemoteDevice(address);
+//                         // Attempt to connect to the device
+//                         mService.connect(device);
+//                     }
+//                 }
+//                 break;
+//             }
+//             case REQUEST_ENABLE_BT: {
+//                 Promise promise = promiseMap.remove(PROMISE_ENABLE_BT);
+//                 // When the request to enable Bluetooth returns
+//                 if (resultCode == Activity.RESULT_OK && promise != null) {
+//                     // Bluetooth is now enabled, so set up a session
+//                     if(adapter!=null){
+//                         WritableArray pairedDeivce =Arguments.createArray();
+//                         Set<BluetoothDevice> boundDevices = adapter.getBondedDevices();
+//                         for (BluetoothDevice d : boundDevices) {
+//                             try {
+//                                 JSONObject obj = new JSONObject();
+//                                 obj.put("name", d.getName());
+//                                 obj.put("address", d.getAddress());
+//                                 pairedDeivce.pushString(obj.toString());
+//                             } catch (Exception e) {
+//                                 //ignore.
+//                             }
+//                         }
+//                         promise.resolve(pairedDeivce);
+//                     }else{
+//                         promise.resolve(null);
+//                     }
+//
+//                 } else {
+//                     // User did not enable Bluetooth or an error occured
+//                     Log.d(TAG, "BT not enabled");
+//                     if (promise != null) {
+//                         promise.reject("ERR", new Exception("BT NOT ENABLED"));
+//                     }
+//                 }
+//                 break;
+//             }
+//         }
     }
 
     @Override
