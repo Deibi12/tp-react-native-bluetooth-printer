@@ -2,7 +2,7 @@
 //  RNBluethManager.m
 //  RNBluetoothEscposPrinter
 //
- 
+
 
 #import <Foundation/Foundation.h>
 #import "RNBluetoothManager.h"
@@ -60,7 +60,7 @@ static NSTimer *timer;
  **/
 - (NSDictionary *)constantsToExport
 {
-    
+
     /*
      EVENT_DEVICE_ALREADY_PAIRED    Emits the devices array already paired
      EVENT_DEVICE_DISCOVER_DONE    Emits when the scan done
@@ -150,7 +150,7 @@ RCT_EXPORT_METHOD(scanDevices:(RCTPromiseResolveBlock)resolve
                 [self sendEventWithName:EVENT_DEVICE_FOUND body:@{@"device":idAndName}];
             }
         }
-        [self.centralManager scanForPeripheralsWithServices:nil options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@NO}];
+        [self.centralManager scanForPeripheralsWithServices:supportServices options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@NO}];
         //Callbacks:
         //centralManager:didDiscoverPeripheral:advertisementData:RSSI:
         NSLog(@"Scanning started with services.");
@@ -159,7 +159,7 @@ RCT_EXPORT_METHOD(scanDevices:(RCTPromiseResolveBlock)resolve
             timer = nil;
         }
         timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(callStop) userInfo:nil repeats:NO];
-    
+
     }
     @catch(NSException *exception){
         NSLog(@"ERROR IN STARTING SCANE %@",exception);
@@ -207,7 +207,7 @@ RCT_EXPORT_METHOD(connect:(NSString *)address
           //starts the scan.
         _waitingConnect = address;
          NSLog(@"Scan to find ....%@",address);
-        [self.centralManager scanForPeripheralsWithServices:nil options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@NO}];
+        [self.centralManager scanForPeripheralsWithServices:supportServices options:@{CBCentralManagerScanOptionAllowDuplicatesKey:@NO}];
         //Callbacks:
         //centralManager:didDiscoverPeripheral:advertisementData:RSSI:
     }
@@ -249,9 +249,10 @@ RCT_EXPORT_METHOD(connect:(NSString *)address
 - (void) initSupportServices
 {
     if(!supportServices){
-        CBUUID *issc = [CBUUID UUIDWithString: @"49535343-FE7D-4AE5-8FA9-9FAFD205E455"];
-        supportServices = [NSArray arrayWithObject:issc];/*ISSC*/
-        writeableCharactiscs = @{issc:@"49535343-8841-43F4-A8D4-ECBE34729BB3"};
+       CBUUID *issc = [CBUUID UUIDWithString: @"E7810A71-73AE-499D-8C15-FAA9AEF0C3F2"];
+       supportServices = [NSArray arrayWithObject:issc];/*ISSC*/
+       writeableCharactiscs = @{issc:@"BEF8D6C9-9C21-4C9E-B632-BD58C1009F9F"};
+
     }
 }
 
@@ -381,7 +382,7 @@ RCT_EXPORT_METHOD(connect:(NSString *)address
          NSLog(@"服务id：%@",service.UUID.UUIDString);
     }
     NSLog(@"开始扫描外设服务的特征 %@...",peripheral.name);
-    
+
     if(error && self.connectRejectBlock){
         RCTPromiseRejectBlock rjBlock = self.connectRejectBlock;
          rjBlock(@"",@"",error);
@@ -436,15 +437,15 @@ RCT_EXPORT_METHOD(connect:(NSString *)address
                 }
             }
         }
-        
-        
+
+
     }
-    
+
     if(error){
         NSLog(@"Discrover charactoreristics error:%@",error);
         return;
     }
-    
+
 //    ServiceUUID：49535343-fe7d-4ae5-8fa9-9fafd205e455；
 //    写的是
 //characteristicUUID:49535343-8841-43f4-a8d4-ecbe34729bb3；
@@ -460,8 +461,8 @@ RCT_EXPORT_METHOD(connect:(NSString *)address
 //    };
 //    param = JSON.stringify(param);
 //    uexBluetoothLE.setCharacteristicNotification(param);
-    
-    
+
+
     /** TESTING NSLOG OUTPUT:: ***/
 //    2018-10-01 21:29:24.136033+0800 bluetoothEscposPrinterExamples[8239:4598148] Trying to connect....D7D39238-EF56-71A7-7DCC-D464EFD3BFF1
 //    2018-10-01 21:29:24.302880+0800 bluetoothEscposPrinterExamples[8239:4598148] did connected: <CBPeripheral: 0x1c4302d90, identifier = D7D39238-EF56-71A7-7DCC-D464EFD3BFF1, name = BlueTooth Printer, state = connected>
@@ -498,7 +499,7 @@ RCT_EXPORT_METHOD(connect:(NSString *)address
 //    2018-10-01 21:29:24.433973+0800 bluetoothEscposPrinterExamples[8239:4598148] Notify
 //    2018-10-01 21:29:24.434378+0800 bluetoothEscposPrinterExamples[8239:4598148] Indicate
 //    2018-10-01 21:29:24.434389+0800 bluetoothEscposPrinterExamples[8239:4598148] known properties: 62
-    
+
 //    for(CBCharacteristic *cc in service.characteristics){
 //       // NSLog(@"Characterstic found: %@ in service: %@" ,cc,service.UUID.UUIDString);
 //        CBCharacteristicProperties pro = cc.properties;
@@ -559,11 +560,11 @@ RCT_EXPORT_METHOD(connect:(NSString *)address
             [writeDataDelegate didWriteDataToBle:false];
         }
     }
-    
+
     NSLog(@"Write bluetooth success.");
     if(writeDataDelegate){
         [writeDataDelegate didWriteDataToBle:true];
     }
 }
- 
+
 @end
