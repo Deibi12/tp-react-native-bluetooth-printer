@@ -1,5 +1,5 @@
 
-package cn.jystudio.bluetooth;
+package com.dsreactnativebluetoothprinter;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -142,7 +142,7 @@ public class BluetoothService {
     }
 
 
-    public synchronized BluetoothDevice getConnectedDevice() { 
+    public synchronized BluetoothDevice getConnectedDevice() {
         BluetoothDevice connectedDevice = null;
         if(mConnectedThread!=null){
             connectedDevice = mConnectedThread.bluetoothDevice();

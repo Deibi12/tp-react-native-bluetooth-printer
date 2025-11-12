@@ -1,4 +1,4 @@
-package cn.jystudio.bluetooth.escpos.command.sdk;
+package com.dsreactnativebluetoothprinter.escpos.command.sdk;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;

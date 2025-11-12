@@ -1,8 +1,8 @@
-package cn.jystudio.bluetooth.tsc;
+package com.dsreactnativebluetoothprinter.tsc;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-import cn.jystudio.bluetooth.escpos.command.sdk.PrintPicture;
+import com.dsreactnativebluetoothprinter.escpos.command.sdk.PrintPicture;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Vector;

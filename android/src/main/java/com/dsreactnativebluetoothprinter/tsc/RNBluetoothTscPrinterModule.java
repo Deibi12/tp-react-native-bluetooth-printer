@@ -1,16 +1,16 @@
-package cn.jystudio.bluetooth.tsc;
+package com.dsreactnativebluetoothprinter.tsc;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import cn.jystudio.bluetooth.BluetoothService;
-import cn.jystudio.bluetooth.BluetoothServiceStateObserver;
+import com.dsreactnativebluetoothprinter.BluetoothService;
+import com.dsreactnativebluetoothprinter.BluetoothServiceStateObserver;
 import com.facebook.react.bridge.*;
 
 import java.util.Map;
 import java.util.Vector;
 
- 
+
 public class RNBluetoothTscPrinterModule extends ReactContextBaseJavaModule
 implements BluetoothServiceStateObserver{
     private static final String TAG="BluetoothTscPrinter";
@@ -45,7 +45,7 @@ implements BluetoothServiceStateObserver{
         TscCommand.DIRECTION direction = options.hasKey("direction") ?
                 TscCommand.DIRECTION.BACKWARD.getValue() == options.getInt("direction") ? TscCommand.DIRECTION.BACKWARD : TscCommand.DIRECTION.FORWARD
                 : TscCommand.DIRECTION.FORWARD;
- 
+
         TscCommand.DENSITY density = options.hasKey("density")?this.findDensity(options.getInt("density")):null;
         ReadableArray reference = options.hasKey("reference")?options.getArray("reference"):null;
 
